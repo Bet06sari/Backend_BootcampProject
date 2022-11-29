@@ -18,6 +18,7 @@ public interface BlacklistService {
 	DataResult<UpdateBlacklistResponse> Update (UpdateBlacklistRequest updateBlacklistRequest);
 	DataResult<GetBlacklistResponse> getById(int id);
 	
+	//katılımcının Blacklistte olup olmadığını kontrol etmek için
 	void checkIfApplicantIsInBlacklist(int applicantId);
 
 }

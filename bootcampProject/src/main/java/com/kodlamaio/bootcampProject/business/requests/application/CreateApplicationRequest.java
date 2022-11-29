@@ -1,5 +1,6 @@
 package com.kodlamaio.bootcampProject.business.requests.application;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import lombok.AllArgsConstructor;
@@ -15,5 +16,7 @@ public class CreateApplicationRequest {
 	@Min(value = 1, message = "this field cannot be left blank ")
 	private int bootcampId;
 	@Min(value = 1, message = "this field cannot be left blank ")
+	@Max(value = 3, message = "this field sss be left blank ")
+	
 	private int state;
 }

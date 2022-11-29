@@ -36,6 +36,7 @@ public class Bootcamps {
 	@Column (name = "state")
 	private int state;
 	//state: application open : application used
+	
 	@ManyToOne
 	@JoinColumn(name = "instructor_id")
 	private Instructor instructor;

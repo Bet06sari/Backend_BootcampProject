@@ -16,8 +16,5 @@ public interface ApplicationService {
 	DataResult<CreateApplicationResponse> Add(CreateApplicationRequest createdApplicationRequest);
 	DataResult<List<GetAllApplicationResponses>> GetAll();
 	DataResult<UpdateApplicationResponse> Update (UpdateApplicationRequest updateApplicationRequest);
-	DataResult<GetApplicationResponses> getById(int id);
-	
-	
-	
+	DataResult<GetApplicationResponses> getById(int id);	
 }

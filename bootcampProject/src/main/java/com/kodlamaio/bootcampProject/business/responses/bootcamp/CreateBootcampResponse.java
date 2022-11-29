@@ -14,10 +14,9 @@ import lombok.NoArgsConstructor;
 public class CreateBootcampResponse {
 	private String name;
 	@DateTimeFormat(pattern="dd/MM/yyyy") 
-	Date dateStart;
+	private Date dateStart;
 	@DateTimeFormat(pattern="dd/MM/yyyy") 
 	private Date dateEnd;
-	private String state;
+	private int state;
 	private int intructorId;
-	
 }

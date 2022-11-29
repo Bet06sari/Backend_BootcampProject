@@ -43,7 +43,7 @@ public class BlacklistManager implements BlacklistService {
 
 	@Override
 	public DataResult<CreateBlacklistResponse> add(CreateBlacklistRequest createBlacklistRequest) {
-		//checkIfApplicantIsInBlacklist(createBlacklistRequest.getApplicantId());
+		checkIfApplicantIsInBlacklist(createBlacklistRequest.getApplicantId());
 		applicantService.checkIfUserIsApplicant(createBlacklistRequest.getApplicantId());
 		Blacklist blacklist = this.modelMapperService.forRequest().map(createBlacklistRequest, Blacklist.class);
 		this.blacklistRepositories.save(blacklist);
@@ -92,7 +92,5 @@ public class BlacklistManager implements BlacklistService {
 		if (blacklistRepositories.existsBlacklistByApplicantId(applicantId)) {
 			throw new BusinessException(Messages.ApplicantIsInBlackList);
 		}
-
 	}
-
 }

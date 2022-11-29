@@ -3,11 +3,9 @@ package com.kodlamaio.bootcampProject.business.concretes;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.kodlamaio.bootcampProject.business.abstracts.ApplicantService;
-import com.kodlamaio.bootcampProject.business.abstracts.BlacklistService;
 import com.kodlamaio.bootcampProject.business.abstracts.EmployeeService;
 import com.kodlamaio.bootcampProject.business.constants.Messages;
 import com.kodlamaio.bootcampProject.business.requests.applicant.CreateApplicantRequest;
@@ -24,7 +22,6 @@ import com.kodlamaio.bootcampProject.core.utilities.results.SuccessDataResult;
 import com.kodlamaio.bootcampProject.core.utilities.results.SuccessResult;
 import com.kodlamaio.bootcampProject.dataAccess.abstracts.ApplicantReposities;
 import com.kodlamaio.bootcampProject.entities.users.Applicant;
-import com.kodlamaio.bootcampProject.entities.users.Blacklist;
 
 import lombok.AllArgsConstructor;
 
@@ -33,7 +30,6 @@ import lombok.AllArgsConstructor;
 public class ApplicantManager implements ApplicantService {
 	private ApplicantReposities applicantReposities;
 	private ModelMapperService modelMapperService;
-	private EmployeeService employeeService;
 
 	@Override
 	public Result delete(int id) {
@@ -100,21 +96,4 @@ public class ApplicantManager implements ApplicantService {
 			throw new BusinessException(Messages.IsNotApplicant);
 		}
 	}
-
-	@Override
-	public Result looseBeingApplicant(int id) {
-		checkIfApplicantExistById(id);
-		applicantReposities.deleteById(id);
-		throw new BusinessException(Messages.LooseBeingApplicant);
-	}
-
-	@Override
-	public DataResult<GetApplicantResponses> beAnApplicantAgain(String about, int id) {
-		Applicant applicant = modelMapperService.forResponse().map(employeeService.getById(id).getData(),
-				Applicant.class);
-		applicant.setAbout(about);
-		GetApplicantResponses data = this.modelMapperService.forResponse().map(applicant, GetApplicantResponses.class);
-		return new SuccessDataResult<>(data, Messages.IsAnApplicantAgain);
-	}
-
 }

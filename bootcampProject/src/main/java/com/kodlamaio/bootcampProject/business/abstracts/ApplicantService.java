@@ -20,9 +20,4 @@ public interface ApplicantService {
 	
 	void checkIfUserIsApplicant(int applicantId);
 	
-	
-	//Burada Blacklistte giren adayların Katılımcıların arasından silinmesi, blacklistten çıkarılanların ise
-	//tekrardan aday olması için iki method kullanılmıştır.
-	Result looseBeingApplicant(int id);
-	DataResult<GetApplicantResponses> beAnApplicantAgain(String about, int id);
 }

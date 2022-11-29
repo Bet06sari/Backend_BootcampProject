@@ -32,6 +32,8 @@ import lombok.AllArgsConstructor;
 public class ApplicationManager implements ApplicationService {
 	private ApplicationReposities applicationReposities;
 	private BlacklistService blacklistService;
+	private ApplicantService applicantService;
+	private BootcampService bootcampService;
 	private ModelMapperService modelMapperService;
 
 	@Override
@@ -43,6 +45,8 @@ public class ApplicationManager implements ApplicationService {
 
 	@Override
 	public DataResult<CreateApplicationResponse> Add(CreateApplicationRequest createdApplicationRequest) {
+		checkIfApplicantExists(createdApplicationRequest.getApplicantId());
+		checkIfBootcampExists(createdApplicationRequest.getBootcampId());
 		blacklistService.checkIfApplicantIsInBlacklist(createdApplicationRequest.getApplicantId());
 		Applications application = this.modelMapperService.forRequest().map(createdApplicationRequest,
 				Applications.class);
@@ -55,7 +59,6 @@ public class ApplicationManager implements ApplicationService {
 
 	@Override
 	public DataResult<List<GetAllApplicationResponses>> GetAll() {
-		//checkIfApplicationExistById();
 		List<Applications> applications = this.applicationReposities.findAll();
 		List<GetAllApplicationResponses> response = applications.stream().map(application -> this.modelMapperService
 				.forResponse().map(applications, GetAllApplicationResponses.class)).collect(Collectors.toList());
@@ -64,6 +67,8 @@ public class ApplicationManager implements ApplicationService {
 
 	@Override
 	public DataResult<UpdateApplicationResponse> Update(UpdateApplicationRequest updateApplicationRequest) {
+		checkIfApplicantExists(updateApplicationRequest.getApplicantId());
+		checkIfBootcampExists(updateApplicationRequest.getBootcampId());
 		Applications application = this.modelMapperService.forRequest().map(updateApplicationRequest,
 				Applications.class);
 		this.applicationReposities.save(application);
@@ -86,5 +91,19 @@ public class ApplicationManager implements ApplicationService {
 			throw new BusinessException(Messages.ApplicationExists);
 	}
 
+	private void checkIfApplicantExists(int applicantId) {
+		var result = applicantService.getById(applicantId);
+		if (result == null) {
+			throw new BusinessException(Messages.ApplicantExists);
+		}
+		
+	}
+	
+	private void checkIfBootcampExists(int bootcampId) {
+		var result = bootcampService.getById(bootcampId);
+		if (result==null) {
+			throw new BusinessException(Messages.BootcampExists);
+		}
+	}
 
 }

@@ -17,6 +17,6 @@ public class UpdateBootcampResponse {
 	Date dateStart;
 	@DateTimeFormat(pattern="dd/MM/yyyy") 
 	private Date dateEnd;
-	private String state;
+	private int state;
 	private int intructorId;
 }
